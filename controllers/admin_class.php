@@ -44,6 +44,9 @@ class Action
 		$data .= ", delivery_date='$delivery_date' ";
 		$data .= ", customer_address='$customer_address' ";
 		$data .= ", delivery_address='$delivery_address' ";
+		$data .= ", sum='$sum' ";
+		$data .= ", discount='$discount' ";
+		$data .= ", grandTotal='$grandTotal' ";
 
 
 
@@ -62,7 +65,6 @@ class Action
 			$save = $this->db->query("INSERT INTO order_details set " . $data);
 			for ($count = 0; $count < count($menu_id); $count++) {
 				$booked = "";
-				// $$pro = $provided[$count];
 				$booked .= "menu_id='$menu_id[$count]'";
 				$booked .= ", order_id='$order_id'";
 				$booked .= ", meal_id='$meal_id[$count]'";
@@ -72,7 +74,6 @@ class Action
 				$booked .= ", provided='$provided[$count]'";
 				$save = $this->db->query("INSERT INTO booked_items set " . $booked);
 			}
-
 		} else {
 			$save = $this->db->query("UPDATE order_details set " . $data . "WHERE id=" . $id);
 		}
@@ -91,6 +92,26 @@ class Action
 		} else {
 			$save = $this->db->query("UPDATE meal set " . $data . "WHERE id=" . $id);
 		}
+
+
+
+		if ($save)
+			return 1;
+	}
+	function add_payment()
+	{
+		extract($_POST);
+		$data = "order_id='$payment_party' ";
+		$data .= ", type='$type' ";
+		$data .= ", amount='$paid_amount' ";
+
+
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO payments set " . $data);
+		} 
+		// else {
+		// 	$save = $this->db->query("UPDATE payments set " . $data . "WHERE id=" . $id);
+		// }
 
 
 

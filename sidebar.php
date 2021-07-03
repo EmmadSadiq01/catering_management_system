@@ -5,14 +5,17 @@
 			<li class="nav-home">
 				<a href="index.php?page=home"><span class="fa fa-home"></span> Home</a>
 			</li>
-			<li>
+			<!-- <li>
 				<a href="#"><span class="fa fa-user"></span> vendors</a>
-			</li>
+			</li> -->
 			<li class="nav-orders">
 				<a href="index.php?page=orders"><span class="fas fa-book"></span> Order</a>
 			</li>
 			<li class="nav-meal">
 				<a href="index.php?page=meal"><span class="fas fa-book"></span> Meal</a>
+			</li>
+			<li class="nav-payment">
+				<a href="index.php?page=payment"><span class="fas fa-hand-holding-usd"></span> Payment</a>
 			</li>
 		</ul>
 

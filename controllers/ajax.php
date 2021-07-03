@@ -19,6 +19,11 @@ if($action == "add_meal"){
 	if($save)
 		echo $save;
 }
+if($action == "add_payment"){
+	$save = $crud->add_payment();
+	if($save)
+		echo $save;
+}
 if($action == "del_meal"){
 	$save = $crud->del_meal();
 	if($save)

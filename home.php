@@ -104,9 +104,9 @@
                 <th>Name</th>
                 <th>Contact</th>
                 <th width="30%">Order</th>
+                <th>Balance</th>
                 <th>Delivery Address</th>
                 <th>Date</th>
-                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -134,7 +134,20 @@
                       ?></td>
                   <td><?php echo $row['delivery_address'] ?></td>
                   <td><?php echo $row['delivery_date'] ?></td>
-                  <td><button class="btn btn-outline-success" class="edit_booked_item" id="bk_<?php echo $row['order_id'] ?>"><i class="fas fa-edit"></i></button><button class="btn btn-outline-danger"><i class="fas fa-trash"></i></button></td>
+                  <!-- <td><button class="btn btn-outline-success" class="edit_booked_item" id="bk_<?php echo $row['order_id'] ?>"><i class="fas fa-edit"></i></button><button class="btn btn-outline-danger"><i class="fas fa-trash"></i></button></td> -->
+                  <td>
+                    <?php
+                    $payment = 0;
+                    $sql_balance = "SELECT * FROM payments WHERE order_id=" . $row['order_id'];
+                    $result_balance = mysqli_query($conn, $sql_balance);
+                    while ($row_balance = mysqli_fetch_assoc($result_balance)) {
+                      $payment += $row_balance['amount'];
+                    }
+
+                    echo (($payment > $row['grandTotal']) ? ($payment - $row['grandTotal']) : ($row['grandTotal'] - $payment))
+
+                    ?>
+                  </td>
                 </tr>
               <?php
               }
@@ -145,7 +158,7 @@
         </div>
       </div>
     </div>
-     <!-- Menu -->
+    <!-- Menu -->
     <div class="col-xl-4 col-lg-4">
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
