@@ -11014,7 +11014,15 @@ h5,
 }
 #sidebar.active ul.components li {
   font-size: 14px;
+  transition: 0.5s all ease-in-out;
 }
+#sidebar.active ul.components li:hover {
+  background: #3b7ddd45;
+  color: black !important;
+}
+/* #sidebar.active ul.components li:hover{
+
+} */
 #sidebar.active ul.components li a {
   padding: 5px 0;
   font-size: 12px;
@@ -11151,7 +11159,7 @@ i {
   font-style: normal;
 }
 .fas {
-  font-family: 'FontAwesome';
+  font-family: "FontAwesome";
 }
 
 .sidebar .nav-item .nav-link,
@@ -11556,4 +11564,30 @@ i {
 .accordion > .card > .card-header {
   border-radius: 0;
   margin-bottom: -1px;
+}
+
+.modal-header {
+  background: #709ad6ba;
+  border-top: 25px;
+}
+.modal-content {
+  border: 1px solid rgb(204 239 255 / 43%);
+  border-radius: 25px;
+  outline: 0;
+  overflow: hidden;
+  box-shadow: 10px 10px 13px 0px #000000ba;
+}
+.modal-title {
+  color: black;
+}
+
+.modal-body {
+  background: #f4faff;
+}
+.modal-footer {
+  background: #709ad6ba;
+}
+
+.modal {
+  backdrop-filter: blur(2px);
 }

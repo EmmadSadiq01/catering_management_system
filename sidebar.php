@@ -15,7 +15,10 @@
 				<a href="index.php?page=meal"><span class="fas fa-book"></span> Meal</a>
 			</li>
 			<li class="nav-payment">
-				<a href="index.php?page=payment"><span class="fas fa-hand-holding-usd"></span> Payment</a>
+				<a href="index.php?page=payment"><span class="fas fa-cash-register"></span> Payment</a>
+			</li>
+			<li class="nav-vendor">
+				<a href="index.php?page=vendor"><span class="fab fa-stack-exchange"></span> Venors</a>
 			</li>
 		</ul>
 
