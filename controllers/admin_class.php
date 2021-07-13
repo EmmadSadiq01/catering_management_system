@@ -73,12 +73,32 @@ class Action
 				$booked .= ", total='$total[$count]'";
 				$booked .= ", provided='$provided[$count]'";
 				$save = $this->db->query("INSERT INTO booked_items set " . $booked);
+				// $vendor_id = $this->db->query("SELECT vendor_id FROM vendor where meal_id ='.$order_id.'");
+				// $purchase_meal = "meal_id='$meal_id[$count]'";
+				if($save){
+
+					$kitchen_list = "item='$meal_id[$count]' ";
+					$kitchen_list .= ", quantity='$making_qty[$count]' ";
+					$order_id = mysqli_fetch_assoc(mysqli_query( $this->db, "SELECT id FROM booked_items ORDER BY id DESC LIMIT 1"))['id'];
+					$kitchen_list .= ", order_id='$order_id' ";
+					$kitchen_list .= ", onDate='$delivery_date' ";		
+
+				$save1 = $this->db->query("INSERT INTO kitchen_list set " . $kitchen_list);
+
+				}
+
+
+
 			}
+
 		} else {
 			$save = $this->db->query("UPDATE order_details set " . $data . "WHERE id=" . $id);
 		}
+
+
 		if ($save)
 			return 1;
+		// return $kitchen_list;
 	}
 	function add_meal()
 	{
@@ -95,6 +115,26 @@ class Action
 
 
 
+		if ($save)
+			return 1;
+	}
+	function add_vendor()
+	{
+		extract($_POST);
+		$data = "name='$name' ";
+		$data .= ", contact='$contact' ";
+		$data .= ", cnic='$cnic' ";
+		// $data .= ", item_id='$item' ";
+		$data .= ", address='$address' ";
+		$data .= ", remarks='$remarks' ";
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO vendor set " . $data);
+			$data_item = "meal_id='$item' ";
+			$data_item .= ", vendor_id='1' ";
+			$save = $this->db->query("INSERT INTO vendor_details set " . $data_item);
+		} else {
+			$save = $this->db->query("UPDATE vendor set " . $data . "WHERE id=" . $id);
+		}
 		if ($save)
 			return 1;
 	}

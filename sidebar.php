@@ -20,6 +20,9 @@
 			<li class="nav-vendor">
 				<a href="index.php?page=vendor"><span class="fab fa-stack-exchange"></span> Venors</a>
 			</li>
+			<li class="nav-kitchen">
+				<a href="index.php?page=kitchen"><span class="fas fa-utensils"></span> Kitchen</a>
+			</li>
 		</ul>
 
 		<div class="footer">

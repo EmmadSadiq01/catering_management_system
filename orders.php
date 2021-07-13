@@ -24,6 +24,8 @@ function meal_menu()
 ?>
 
 <style>
+    @import url('select_with_search/select2.min.css');
+
     .menu_item p {
         margin-bottom: 0px;
     }
@@ -128,6 +130,36 @@ function meal_menu()
                             <div class="col-12 col-md-6">
 
                                 <div class="my-form-group">
+                                    <!-- <input type="text" name="name" required> -->
+                                    <select name="order_type" id="order_type" class="custom-select" onchange="orderType()">
+                                        <option value="" disabled selected>select</option>
+                                        <option value="vendor">Vendor</option>
+                                        <option value="normal">normal</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-6">
+
+                                <div class="my-form-group" id="vendor_select" style="display:none">
+                                    <select id="vender_order" name="vender_order" class="custom-select" require>
+                                        <option value="">Select Party*</option>
+                                        <?php
+                                        $sql = "SELECT * FROM order_details ORDER BY party_name ASC";
+                                        $result = mysqli_query($conn, $sql);
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $payment = 0;
+                                            $sql_balance = "SELECT * FROM payments WHERE order_id=" . $row['order_id'];
+                                            $result_balance = mysqli_query($conn, $sql_balance);
+                                            while ($row_balance = mysqli_fetch_assoc($result_balance)) {
+                                                $payment += $row_balance['amount'];
+                                            }
+                                            echo '<option value="' . $row['order_id'] . '" data-balance="' . (($payment > $row['grandTotal']) ? ($payment - $row['grandTotal']) : ($row['grandTotal'] - $payment)) . '">' . $row['party_name'] . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="my-form-group" id="order_name" style="display:none">
                                     <input type="text" name="name" required>
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
@@ -263,12 +295,18 @@ function meal_menu()
 
 
 </div>
+<script src="select_with_search/select2.min.js"></script>
 <script>
     let add_row = 2;
 
     function allowDrop(ev) {
         ev.preventDefault();
     }
+
+    $("#vender_order").select2({
+        placeholder: "Select Payment Party*",
+        allowClear: true
+    });
 
     function drag(ev) {
         ev.dataTransfer.setData("text", ev.target.id);
@@ -330,8 +368,6 @@ function meal_menu()
         html += '</select>'
         html += '</div>'
         html += '</div>'
-        // $('[id^=add_]').hide()
-        // $('#add_' + add_row).hide()
         $('#addMenuBox').append(html);
         add_row += 1;
 
@@ -361,5 +397,16 @@ function meal_menu()
         })
         $("#sum").val(sum)
         $("#grandTotal").val(sum - parseInt($('#discount').val()))
+    }
+    const orderType = () => {
+        let type = $("#order_type option:selected").val()
+        if (type == "vendor") {
+            $("#vendor_select").show()
+            $("#order_name").hide()
+        } else if (type == "normal") {
+            $("#vendor_select").hide()
+            $("#order_name").show()
+        }
+
     }
 </script>

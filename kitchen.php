@@ -52,7 +52,7 @@
         </div>
     </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Vendor List</h1>
+        <h1 class="h3 mb-0 text-gray-800">Kitchen List</h1>
         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-file fa-sm text-white-50"></i> Reports</a> -->
     </div>
     <!-- card -->
@@ -63,35 +63,29 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Vendors</h6>
-                    <div class="dropdown no-arrow">
+                    <h6 class="m-0 font-weight-bold text-primary">Todays Required</h6>
+                    <!-- <div class="dropdown no-arrow">
                         <a class="dropdown-toggle p-2" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" id="add_vendor" href="#">Add Vendor</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- Card Body -->
                 <div class="card-body table_box">
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Vendor No</th>
-                                <th>Name</th>
-                                <th>Contact</th>
-                                <th>CNIC</th>
-                                <th>Address</th>
+                                <th>#</th>
                                 <th>Item</th>
-                                <th>Description</th>
-                                <th>Balance</th>
-                                <th>Action</th>
+                                <th>Quantity</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM vendor";
+                            $sql = "SELECT * FROM kitchen_list";
                             $reslt = mysqli_query($conn, $sql);
 
                             while ($row = mysqli_fetch_assoc($reslt)) {
@@ -99,16 +93,11 @@
                             ?>
                                 <tr>
                                     <td><?php echo $row['id'] ?></td>
-                                    <td><?php echo $row['name'] ?></td>
-                                    <td><?php echo $row['contact'] ?></td>
-                                    <td><?php echo $row['cnic'] ?></td>
-                                    <td><?php echo $row['address'] ?></td>
                                     <td><?php 
-                                    // echo mysqli_fetch_assoc(mysqli_query($conn, "SELECT `name` FROM meal WHERE id=" . $row['item_id']))['name'] 
+                                    echo mysqli_fetch_assoc(mysqli_query($conn, "SELECT `name` FROM meal WHERE id=" . $row['item']))['name'] 
                                     ?></td>
-                                    <td><?php echo $row['remarks'] ?></td>
-                                    <td>00</td>
-                                    <td> <button class="btn btn-sm btn-outline-primary edit_vendor" data-id="<?php echo $row['id'] ?>" type="button"><i class="fa fa-edit"></i></button><button class="btn btn-sm btn-outline-danger del_vendor" data-id="<?php echo $row['id'] ?>" type="button"><i class="fa fa-trash-alt"></i></button></td>
+                                    <td><?php echo $row['quantity'] ?></td>
+                                  
                                 </tr>
                             <?php
                             }

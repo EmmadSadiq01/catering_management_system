@@ -2,14 +2,14 @@
 include '../database/db_connect.php';
 // echo "<script>console.log('hello'," . $_GET['id'] . ")</script>";
 if (isset($_GET['id'])) {
-    $qry = $conn->query("SELECT * FROM menu where id =" . $_GET['id'])->fetch_array();
+    $qry = $conn->query("SELECT * FROM vendor where id =" . $_GET['id'])->fetch_array();
     foreach ($qry as $k => $v) {
         $$k = $v;
     }
 }
 ?>
 <div class="container-fluid">
-    <form id="add_menu_frm">
+    <form id="add_vendor_frm">
         <div class="form-group">
             <label>Vendor Name:</label>
             <input type="hidden" name="id" value="<?php echo isset($id) ? $id : "" ?>" />
@@ -20,14 +20,20 @@ if (isset($_GET['id'])) {
             <input type="number" name="contact" required="required" class="form-control" value="<?php echo isset($contact) ? $contact : "" ?>" />
         </div>
         <div class="form-group">
+            <label>CNIC:</label>
+            <input type="text" name="cnic" required="required" class="form-control" value="<?php echo isset($cnic) ? $cnic : "" ?>" />
+        </div>
+        <div class="form-group">
             <label>Item:</label>
             <select name="item" id="type" class="custom-select">
                 <option value="">select</option>
                 <?php
                 $sql_item = "SELECT * FROM meal ORDER BY `name` ASC";
-                $result_item = mysqli_query($conn,$sql_item);
-                while($row_item = mysqli_fetch_assoc($result_item)){
-                    echo '<option value="'.$row_item["item_id"].'">'.$row_item.'</option>'
+                $result_item = mysqli_query($conn, $sql_item);
+                while ($row_item = mysqli_fetch_assoc($result_item)) {
+                ?>
+                    <option value="<?php echo $row_item["id"] ?>" <?php echo (isset($item_id) && $item_id == $row_item["id"]) ? "selected" : "" ?>> <?php echo $row_item["name"] ?></option>';
+                <?php
                 }
                 ?>
             </select>
@@ -48,12 +54,12 @@ if (isset($_GET['id'])) {
 </div>
 <script>
     $(document).ready(function() {
-        $('#add_menu_frm').submit(function(e) {
+        $('#add_vendor_frm').submit(function(e) {
             e.preventDefault()
             start_load();
             $.ajax({
 
-                url: './controllers/ajax.php?action=add_menu',
+                url: './controllers/ajax.php?action=add_vendor',
                 method: "POST",
                 data: $(this).serialize(),
                 error: err => console.log(),

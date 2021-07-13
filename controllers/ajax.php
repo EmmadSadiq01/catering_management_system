@@ -29,3 +29,8 @@ if($action == "del_meal"){
 	if($save)
 		echo $save;
 }
+if($action == "add_vendor"){
+	$save = $crud->add_vendor();
+	if($save)
+		echo $save;
+}
